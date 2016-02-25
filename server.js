@@ -2,43 +2,24 @@
 
 var express = require('express');
 var morgan = require('morgan');
+var path = require('path');
 var methodOverride = require('method-override');
+var bodyParser = require('body-parser');
 
 var app = express();
+var burgersRouter = require(path.join(__dirname, './routes/burgers'));
 
 app.use(morgan('combined'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
 app.get('/', function(req, res) {
-  res.send(req.method + ' ' + req.route.path);
+  res.send(req.method + '/');
   //res.render('index.html.ejs', {});
 });
 
-app.get('/burgers', /*db.showBurgers,*/ function(req, res) {
-  res.send(req.method + ' ' + req.route.path);
-  //res.render('burgers.html.ejs', {/*add data of burgers*/});
-});
-
-app.post('/burgers', /*db.addBurger,*/ function(req, res) {
-  res.send(req.method + ' ' + req.route.path);
-  //res.redirect('/burgers');
-});
-
-app.get('/burgers/new', function(req, res) {
-  res.send(req.method + ' ' + req.route.path);
-  //res.render('new-burger.html.ejs', {});
-});
-
-app.get('/burgers/:id', /*db.showOneBurger,*/ function(req, res) {
-  res.send(req.method + ' ' + req.route.path);
-  //res.render('one-burger.html.ejs', {/*add data of burger*/});
-});
-
-
-app.get('/burgers/:id/edit', /*db.showOneBurger,*/ function(req, res) {
-  res.send(req.method + ' ' + req.route.path);
-  //res.render('edit-burger.html.ejs', {});
-});
+app.use('/burgers', burgersRouter);
 
 var port = process.argv[2] || 3000;
 var server = app.listen(port, ()=> console.log('server started on port ' + port));

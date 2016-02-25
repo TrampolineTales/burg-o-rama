@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/TrampolineTales/burg-o-rama#readme",
   "dependencies": {
+    "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "method-override": "^2.3.5",
     "morgan": "^1.7.0",
